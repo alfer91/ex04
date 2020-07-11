@@ -1,5 +1,6 @@
 package org.zerock.aop;
 
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
@@ -22,5 +23,13 @@ public class LogAdvice {
 	public void logBeforeWithParam(String str1, String str2) {  // Pointcut에 지정된 변수를 파라미터로 얻음
 		log.info("str1: " + str1);
 		log.info("str2: " + str2);
+	}
+	
+	/* Target이 예외를 발생한 후 동작 */
+	@AfterThrowing(pointcut = "execution(* org.zerock.service.SampleService*.*(..))", throwing="exception")
+	public void logException(Exception exception) {
+		
+		log.info("exception....!!!!");
+		log.info("exception: " + exception);
 	}
 }
